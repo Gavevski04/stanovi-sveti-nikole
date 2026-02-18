@@ -13,10 +13,11 @@
 </header>
 
 <section class="filter">
-    <label>Цена до: <input type="number" id="priceFilter"></label>
-    <label>Квадратура до: <input type="number" id="areaFilter"></label>
+    <input type="text" id="searchInput" placeholder="Пребарувај по име или локација..." oninput="applyFilter()">
+    <label>Цена до: <input type="number" id="priceFilter" oninput="applyFilter()"></label>
+    <label>Квадратура до: <input type="number" id="areaFilter" oninput="applyFilter()"></label>
     <label>Локација:
-        <select id="locationFilter">
+        <select id="locationFilter" onchange="applyFilter()">
             <option value="">Сите</option>
             <option value="Центар">Центар</option>
             <option value="Карши Општина">Карши Општина</option>
@@ -24,7 +25,13 @@
             <option value="Стар Центар">Стар Центар</option>
         </select>
     </label>
-    <button onclick="applyFilter()">Филтрирај 🔍</button>
+    <label>Sort:
+        <select id="sortSelect" onchange="applyFilter()">
+            <option value="">Без сортирање</option>
+            <option value="priceAsc">Цена ↑</option>
+            <option value="priceDesc">Цена ↓</option>
+        </select>
+    </label>
 </section>
 
 <div class="stan-container" id="stanContainer"></div>
@@ -72,7 +79,7 @@ let filteredStans = [...allStans];
 let currentPage = 1;
 const itemsPerPage = 4;
 
-// Прикажи станови
+// Display станови
 function displayStans() {
     const container = document.getElementById("stanContainer");
     container.innerHTML = "";
@@ -90,6 +97,7 @@ function displayStans() {
             <img src="${stan.images[0]}" alt="${stan.title}">
             <p>Цена: ${stan.price}€ | Локација: ${stan.location}</p>
             <p class="short-desc">${stan.desc}</p>
+            <div class="hover-info">Цена: ${stan.price}€, ${stan.area}м², ${stan.location}</div>
             <button class="details-btn" onclick="openGallery(this)">Повеќе детали</button>
             <a href="https://wa.me/38970123456?text=Интерес за ${stan.title}" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
         `;
@@ -112,14 +120,23 @@ function renderPagination() {
     }
 }
 
-// Филтер
+// Filter + Search + Sort
 function applyFilter() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
     const maxPrice = parseFloat(document.getElementById('priceFilter').value) || Infinity;
     const maxArea = parseFloat(document.getElementById('areaFilter').value) || Infinity;
     const location = document.getElementById('locationFilter').value;
+    const sort = document.getElementById('sortSelect').value;
+
     filteredStans = allStans.filter(stan=>{
-        return stan.price<=maxPrice && stan.area<=maxArea && (location==="" || stan.location===location);
+        const matchesSearch = stan.title.toLowerCase().includes(search) || stan.location.toLowerCase().includes(search);
+        return matchesSearch && stan.price<=maxPrice && stan.area<=maxArea && (location==="" || stan.location===location);
     });
+
+    // Sort
+    if(sort==="priceAsc") filteredStans.sort((a,b)=>a.price-b.price);
+    else if(sort==="priceDesc") filteredStans.sort((a,b)=>b.price-a.price);
+
     currentPage=1;
     displayStans();
 }
@@ -135,11 +152,7 @@ function openGallery(button) {
     document.getElementById('modalImage').src = currentImages[currentIndex];
     renderThumbnails();
 }
-
-function closeGallery() { 
-    document.getElementById('galleryModal').style.display = "none"; 
-}
-
+function closeGallery() { document.getElementById('galleryModal').style.display = "none"; }
 function changeImage(n) {
     currentIndex += n;
     if(currentIndex<0) currentIndex=currentImages.length-1;
@@ -147,8 +160,6 @@ function changeImage(n) {
     document.getElementById('modalImage').src = currentImages[currentIndex];
     highlightThumbnail();
 }
-
-// Render thumbnails
 function renderThumbnails() {
     const thumbs = document.getElementById('thumbnails');
     thumbs.innerHTML = "";
@@ -161,15 +172,13 @@ function renderThumbnails() {
     });
     highlightThumbnail();
 }
-
 function highlightThumbnail() {
     const thumbs = document.querySelectorAll("#thumbnails .thumb");
     thumbs.forEach((img,i)=>{ img.classList.toggle("active-thumb", i===currentIndex); });
 }
 
-// Иницијално прикажи
+// Иницијално
 displayStans();
 </script>
-
 </body>
 </html>

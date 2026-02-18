@@ -1,12 +1,14 @@
 body{font-family:Arial,sans-serif;background:#f2f2f2;margin:0;padding:20px;}
 h1{text-align:center;}
 .stan-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:20px auto;}
-.stan{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.3s,box-shadow 0.3s;}
+.stan{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.3s,box-shadow 0.3s;position:relative;}
 .stan:hover{transform:scale(1.02);box-shadow:0 5px 15px rgba(0,0,0,0.3);}
 .stan img{width:100%;border-radius:6px;margin-bottom:10px;transition:transform 0.3s;}
 .stan img:hover{transform:scale(1.05);}
 .short-desc{font-size:14px;margin-bottom:10px;}
-.details-btn{padding:8px 15px;background:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;}
+.hover-info{position:absolute;top:0;left:0;background:rgba(0,0,0,0.7);color:white;padding:5px 10px;border-radius:0 0 5px 0;font-size:12px;display:none;}
+.stan:hover .hover-info{display:block;}
+.details-btn{padding:8px 15px;background:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;margin-bottom:5px;}
 .details-btn:hover{background:#45a049;}
 .whatsapp-button{display:inline-block;padding:10px 20px;background:#25D366;color:white;font-weight:bold;text-decoration:none;border-radius:5px;margin:10px 0;transition:background 0.3s;}
 .whatsapp-button:hover{background:#1DA851;}
@@ -14,10 +16,8 @@ h1{text-align:center;}
 .contact-form input,.contact-form textarea{padding:10px;border:1px solid #ccc;border-radius:5px;}
 .contact-form button{padding:10px;background:#4CAF50;color:white;border:none;font-weight:bold;border-radius:5px;cursor:pointer;}
 .contact-form button:hover{background:#45a049;}
-.filter{max-width:500px;margin:20px auto;padding:10px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
-.filter input,.filter select{padding:8px;width:100px;}
-.filter button{padding:8px 15px;background:#25D366;color:white;border:none;border-radius:5px;cursor:pointer;}
-.filter button:hover{background:#1DA851;}
+.filter{max-width:700px;margin:20px auto;padding:10px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.filter input,.filter select{padding:8px;width:150px;}
 .modal{display:none;position:fixed;z-index:100;padding-top:60px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.9);}
 .modal-content{margin:auto;display:block;max-width:90%;max-height:60%;}
 .close{position:absolute;top:20px;right:35px;color:white;font-size:40px;font-weight:bold;cursor:pointer;}
@@ -32,4 +32,4 @@ h1{text-align:center;}
 .pagination button.active{background:#1DA851;font-weight:bold;}
 footer{background:#333;color:white;text-align:center;padding:15px;margin-top:40px;border-radius:6px;}
 footer .social-icons img{width:25px;margin:0 5px;}
-@media(max-width:600px){.stan-container{grid-template-columns:1fr;}.filter input,.filter select{width:80px;}.whatsapp-button{width:90%;text-align:center;display:block;margin:10px auto;}.prev,.next{font-size:20px;padding:10px;}}
+@media(max-width:600px){.stan-container{grid-template-columns:1fr;}.filter input,.filter select{width:100%;}.whatsapp-button{width:90%;text-align:center;display:block;margin:10px auto;}.prev,.next{font-size:20px;padding:10px;}}
