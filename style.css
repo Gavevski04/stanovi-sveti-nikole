@@ -16,3 +16,7 @@ h1 {
     max-width: 500px;
     border-radius: 8px;
 }
+.stan img {
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
