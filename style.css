@@ -1,135 +1,35 @@
-/* Основен стил */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 20px;
-}
-h1 { text-align: center; }
-
-/* Мрежа на станови */
-.stan-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
-    margin: 20px auto;
-}
-
-/* Картички */
-.stan {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: transform 0.3s, box-shadow 0.3s;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.5s forwards;
-}
-.stan:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.stan img {
-    width: 100%;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    transition: transform 0.3s;
-}
-.stan img:hover { transform: scale(1.05); }
-
-.short-desc { font-size: 14px; margin-bottom: 10px; }
-.details-btn {
-    padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.details-btn:hover { background-color: #45a049; }
-
-/* WhatsApp копче */
-.whatsapp-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #25D366;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    margin: 10px 0;
-    transition: background 0.3s;
-}
-.whatsapp-button:hover { background-color: #1DA851; }
-
-/* Контакт форма */
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-    margin: 20px auto;
-}
-.contact-form input,
-.contact-form textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.contact-form button {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.contact-form button:hover { background-color: #45a049; }
-
-/* Филтер */
-.filter {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.filter input, .filter select {
-    padding: 8px;
-    width: 100px;
-}
-.filter button {
-    padding: 8px 15px;
-    background-color: #25D366;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.filter button:hover { background-color: #1DA851; }
-
-/* Анимација */
-@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-
-/* Футер */
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    margin-top: 40px;
-    border-radius: 6px;
-}
-footer .social-icons img { width: 25px; margin: 0 5px; }
-
-/* Responsive */
-@media(max-width:600px){
-    .stan-container { grid-template-columns: 1fr; }
-    .filter input, .filter select { width: 80px; }
-    .whatsapp-button { width: 90%; text-align: center; display: block; margin: 10px auto; }
-}
+body{font-family:Arial,sans-serif;background:#f2f2f2;margin:0;padding:20px;}
+h1{text-align:center;}
+.stan-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:20px auto;}
+.stan{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.3s,box-shadow 0.3s;}
+.stan:hover{transform:scale(1.02);box-shadow:0 5px 15px rgba(0,0,0,0.3);}
+.stan img{width:100%;border-radius:6px;margin-bottom:10px;transition:transform 0.3s;}
+.stan img:hover{transform:scale(1.05);}
+.short-desc{font-size:14px;margin-bottom:10px;}
+.details-btn{padding:8px 15px;background:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;}
+.details-btn:hover{background:#45a049;}
+.whatsapp-button{display:inline-block;padding:10px 20px;background:#25D366;color:white;font-weight:bold;text-decoration:none;border-radius:5px;margin:10px 0;transition:background 0.3s;}
+.whatsapp-button:hover{background:#1DA851;}
+.contact-form{display:flex;flex-direction:column;gap:10px;max-width:400px;margin:20px auto;}
+.contact-form input,.contact-form textarea{padding:10px;border:1px solid #ccc;border-radius:5px;}
+.contact-form button{padding:10px;background:#4CAF50;color:white;border:none;font-weight:bold;border-radius:5px;cursor:pointer;}
+.contact-form button:hover{background:#45a049;}
+.filter{max-width:500px;margin:20px auto;padding:10px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.filter input,.filter select{padding:8px;width:100px;}
+.filter button{padding:8px 15px;background:#25D366;color:white;border:none;border-radius:5px;cursor:pointer;}
+.filter button:hover{background:#1DA851;}
+.modal{display:none;position:fixed;z-index:100;padding-top:60px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.9);}
+.modal-content{margin:auto;display:block;max-width:90%;max-height:60%;}
+.close{position:absolute;top:20px;right:35px;color:white;font-size:40px;font-weight:bold;cursor:pointer;}
+.prev,.next{cursor:pointer;position:absolute;top:50%;width:auto;padding:16px;color:white;font-weight:bold;font-size:30px;user-select:none;transform:translateY(-50%);}
+.prev{left:0;}
+.next{right:0;}
+.thumbnails{display:flex;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+.thumbnails .thumb{width:60px;height:40px;margin:5px;cursor:pointer;opacity:0.7;border:2px solid transparent;border-radius:4px;transition:0.3s;}
+.thumbnails .thumb:hover,.thumbnails .active-thumb{opacity:1;border-color:#4CAF50;}
+.pagination{text-align:center;margin:20px 0;}
+.pagination button{margin:0 5px;padding:6px 12px;background:#25D366;color:white;border:none;border-radius:5px;cursor:pointer;}
+.pagination button.active{background:#1DA851;font-weight:bold;}
+footer{background:#333;color:white;text-align:center;padding:15px;margin-top:40px;border-radius:6px;}
+footer .social-icons img{width:25px;margin:0 5px;}
+@media(max-width:600px){.stan-container{grid-template-columns:1fr;}.filter input,.filter select{width:80px;}.whatsapp-button{width:90%;text-align:center;display:block;margin:10px auto;}.prev,.next{font-size:20px;padding:10px;}}

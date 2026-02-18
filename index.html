@@ -24,45 +24,19 @@
             <option value="Стар Центар">Стар Центар</option>
         </select>
     </label>
-    <button onclick="filterItems()">Филтрирај 🔍</button>
+    <button onclick="applyFilter()">Филтрирај 🔍</button>
 </section>
 
-<div class="stan-container">
-    <div class="stan" data-price="900" data-area="60" data-location="Центар">
-        <h2>Стан 60m²</h2>
-        <img src="images/stan1.png" alt="Стан 60m²">
-        <p>Цена: 900€ | Локација: Центар</p>
-        <p class="short-desc">Овој стан е во центарот, со одлична локација и близу до сите услуги.</p>
-        <button class="details-btn">Повеќе детали</button>
-        <a href="https://wa.me/38970123456?text=Интерес за стан 60m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
-    </div>
+<div class="stan-container" id="stanContainer"></div>
+<div class="pagination" id="pagination"></div>
 
-    <div class="stan" data-price="1100" data-area="75" data-location="Карши Општина">
-        <h2>Стан 75m²</h2>
-        <img src="images/stan2.jpg" alt="Стан 75m²">
-        <p>Цена: 1.100€ | Локација: Карши Општина</p>
-        <p class="short-desc">Стан со поголема површина, идеален за семејство.</p>
-        <button class="details-btn">Повеќе детали</button>
-        <a href="https://wa.me/38970123456?text=Интерес за стан 75m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
-    </div>
-
-    <div class="stan" data-price="1300" data-area="90" data-location="Ново Населба">
-        <h2>Стан 90m²</h2>
-        <img src="images/stan3.jpg" alt="Стан 90m²">
-        <p>Цена: 1.300€ | Локација: Ново Населба</p>
-        <p class="short-desc">Голем стан со светли простории и модерна опрема.</p>
-        <button class="details-btn">Повеќе детали</button>
-        <a href="https://wa.me/38970123456?text=Интерес за стан 90m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
-    </div>
-
-    <div class="stan" data-price="850" data-area="55" data-location="Стар Центар">
-        <h2>Стан 55m²</h2>
-        <img src="images/stan4.jpg" alt="Стан 55m²">
-        <p>Цена: 850€ | Локација: Стар Центар</p>
-        <p class="short-desc">Компактен стан во историски дел од градот.</p>
-        <button class="details-btn">Повеќе детали</button>
-        <a href="https://wa.me/38970123456?text=Интерес за стан 55m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
-    </div>
+<!-- Галерија Модал -->
+<div id="galleryModal" class="modal">
+    <span class="close" onclick="closeGallery()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+    <a class="next" onclick="changeImage(1)">&#10095;</a>
+    <div class="thumbnails" id="thumbnails"></div>
 </div>
 
 <section class="contact-section">
@@ -79,24 +53,122 @@
 <p>© 2026 Станови во Свети Николе</p>
 <div class="social-icons">
     <a href="#"><img src="images/facebook.png" alt="FB"></a>
-    <a href="#"><img src="images/instagram.png" alt="IG"></a>
+    <a href="#"><img src="images/instagram.jpg" alt="IG"></a>
 </div>
 </footer>
 
 <script>
-function filterItems() {
+// Сите станови
+const allStans = [
+    {title:"Стан 60m²", price:900, area:60, location:"Центар", images:["images/stan1.png","images/stan1-2.jpg","images/stan1-3.jpg"], desc:"Овој стан е во центарот, со одлична локација и близу до сите услуги."},
+    {title:"Стан 75m²", price:1100, area:75, location:"Карши Општина", images:["images/stan2.jpg","images/stan2-2.jpg","images/stan2-3.jpg"], desc:"Стан со поголема површина, идеален за семејство."},
+    {title:"Стан 90m²", price:1300, area:90, location:"Ново Населба", images:["images/stan3.jpg","images/stan3-2.jpg","images/stan3-3.jpg"], desc:"Голем стан со светли простории и модерна опрема."},
+    {title:"Стан 55m²", price:850, area:55, location:"Стар Центар", images:["images/stan4.jpg","images/stan4-2.jpg","images/stan4-3.jpg"], desc:"Компактен стан во историски дел од градот."},
+    {title:"Стан 65m²", price:950, area:65, location:"Центар", images:["images/stan5.jpg","images/stan5-2.jpg"], desc:"Стан со модерна опрема и убав поглед."},
+    {title:"Стан 80m²", price:1200, area:80, location:"Ново Населба", images:["images/stan6.jpg","images/stan6-2.jpg"], desc:"Светол и простран стан со голем дневен престој."}
+];
+
+let filteredStans = [...allStans];
+let currentPage = 1;
+const itemsPerPage = 4;
+
+// Прикажи станови
+function displayStans() {
+    const container = document.getElementById("stanContainer");
+    container.innerHTML = "";
+    const start = (currentPage-1)*itemsPerPage;
+    const end = start + itemsPerPage;
+    filteredStans.slice(start,end).forEach(stan=>{
+        const div = document.createElement("div");
+        div.className = "stan";
+        div.dataset.images = JSON.stringify(stan.images);
+        div.dataset.price = stan.price;
+        div.dataset.area = stan.area;
+        div.dataset.location = stan.location;
+        div.innerHTML = `
+            <h2>${stan.title}</h2>
+            <img src="${stan.images[0]}" alt="${stan.title}">
+            <p>Цена: ${stan.price}€ | Локација: ${stan.location}</p>
+            <p class="short-desc">${stan.desc}</p>
+            <button class="details-btn" onclick="openGallery(this)">Повеќе детали</button>
+            <a href="https://wa.me/38970123456?text=Интерес за ${stan.title}" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
+        `;
+        container.appendChild(div);
+    });
+    renderPagination();
+}
+
+// Pagination
+function renderPagination() {
+    const totalPages = Math.ceil(filteredStans.length/itemsPerPage);
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+    for(let i=1;i<=totalPages;i++){
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        if(i===currentPage) btn.classList.add("active");
+        btn.onclick = ()=>{ currentPage=i; displayStans(); };
+        pagination.appendChild(btn);
+    }
+}
+
+// Филтер
+function applyFilter() {
     const maxPrice = parseFloat(document.getElementById('priceFilter').value) || Infinity;
     const maxArea = parseFloat(document.getElementById('areaFilter').value) || Infinity;
     const location = document.getElementById('locationFilter').value;
-    const items = document.querySelectorAll('.stan');
-
-    items.forEach(item => {
-        const price = parseFloat(item.dataset.price);
-        const area = parseFloat(item.dataset.area);
-        const loc = item.dataset.location;
-        item.style.display = (price <= maxPrice && area <= maxArea && (location === "" || location === loc)) ? 'block' : 'none';
+    filteredStans = allStans.filter(stan=>{
+        return stan.price<=maxPrice && stan.area<=maxArea && (location==="" || stan.location===location);
     });
+    currentPage=1;
+    displayStans();
 }
+
+// Галерија со thumbnails
+let currentImages = [];
+let currentIndex = 0;
+function openGallery(button) {
+    const stan = button.closest('.stan');
+    currentImages = JSON.parse(stan.dataset.images);
+    currentIndex = 0;
+    document.getElementById('galleryModal').style.display = "block";
+    document.getElementById('modalImage').src = currentImages[currentIndex];
+    renderThumbnails();
+}
+
+function closeGallery() { 
+    document.getElementById('galleryModal').style.display = "none"; 
+}
+
+function changeImage(n) {
+    currentIndex += n;
+    if(currentIndex<0) currentIndex=currentImages.length-1;
+    if(currentIndex>=currentImages.length) currentIndex=0;
+    document.getElementById('modalImage').src = currentImages[currentIndex];
+    highlightThumbnail();
+}
+
+// Render thumbnails
+function renderThumbnails() {
+    const thumbs = document.getElementById('thumbnails');
+    thumbs.innerHTML = "";
+    currentImages.forEach((src,index)=>{
+        const img = document.createElement("img");
+        img.src = src;
+        img.className = "thumb";
+        img.onclick = ()=>{ currentIndex=index; document.getElementById('modalImage').src=currentImages[currentIndex]; highlightThumbnail(); };
+        thumbs.appendChild(img);
+    });
+    highlightThumbnail();
+}
+
+function highlightThumbnail() {
+    const thumbs = document.querySelectorAll("#thumbnails .thumb");
+    thumbs.forEach((img,i)=>{ img.classList.toggle("active-thumb", i===currentIndex); });
+}
+
+// Иницијално прикажи
+displayStans();
 </script>
 
 </body>
