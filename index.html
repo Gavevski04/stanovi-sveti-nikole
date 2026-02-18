@@ -1,77 +1,100 @@
 <!DOCTYPE html>
 <html lang="mk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Станови во Свети Николе</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Станови во Свети Николе</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <h1>Станови во Свети Николе</h1>
+<h1>Станови во Свети Николе</h1>
 </header>
 
 <section class="filter">
     <label>Цена до: <input type="number" id="priceFilter"></label>
     <label>Квадратура до: <input type="number" id="areaFilter"></label>
+    <label>Локација:
+        <select id="locationFilter">
+            <option value="">Сите</option>
+            <option value="Центар">Центар</option>
+            <option value="Карши Општина">Карши Општина</option>
+            <option value="Ново Населба">Ново Населба</option>
+            <option value="Стар Центар">Стар Центар</option>
+        </select>
+    </label>
     <button onclick="filterItems()">Филтрирај 🔍</button>
 </section>
 
-<div class="stan" data-price="900" data-area="60">
-    <h2>Стан 60m²</h2>
-    <img src="images/stan1.png" alt="Стан 60m²">
-    <p>Цена: 900€</p>
-    <p>Локација: Центар</p>
-</div>
+<div class="stan-container">
+    <div class="stan" data-price="900" data-area="60" data-location="Центар">
+        <h2>Стан 60m²</h2>
+        <img src="images/stan1.png" alt="Стан 60m²">
+        <p>Цена: 900€ | Локација: Центар</p>
+        <p class="short-desc">Овој стан е во центарот, со одлична локација и близу до сите услуги.</p>
+        <button class="details-btn">Повеќе детали</button>
+        <a href="https://wa.me/38970123456?text=Интерес за стан 60m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
+    </div>
 
-<div class="stan" data-price="1100" data-area="75">
-    <h2>Стан 75m²</h2>
-    <img src="images/stan2.jpg" alt="Стан 75m²">
-    <p>Цена: 1.100€</p>
-    <p>Локација: Карши Општина</p>
-</div>
+    <div class="stan" data-price="1100" data-area="75" data-location="Карши Општина">
+        <h2>Стан 75m²</h2>
+        <img src="images/stan2.jpg" alt="Стан 75m²">
+        <p>Цена: 1.100€ | Локација: Карши Општина</p>
+        <p class="short-desc">Стан со поголема површина, идеален за семејство.</p>
+        <button class="details-btn">Повеќе детали</button>
+        <a href="https://wa.me/38970123456?text=Интерес за стан 75m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
+    </div>
 
-<div class="stan" data-price="1300" data-area="90">
-    <h2>Стан 90m²</h2>
-    <img src="images/stan3.jpg" alt="Стан 90m²">
-    <p>Цена: 1.300€</p>
-    <p>Локација: Ново Населба</p>
-</div>
+    <div class="stan" data-price="1300" data-area="90" data-location="Ново Населба">
+        <h2>Стан 90m²</h2>
+        <img src="images/stan3.jpg" alt="Стан 90m²">
+        <p>Цена: 1.300€ | Локација: Ново Населба</p>
+        <p class="short-desc">Голем стан со светли простории и модерна опрема.</p>
+        <button class="details-btn">Повеќе детали</button>
+        <a href="https://wa.me/38970123456?text=Интерес за стан 90m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
+    </div>
 
-<div class="stan" data-price="850" data-area="55">
-    <h2>Стан 55m²</h2>
-    <img src="images/stan4.jpg" alt="Стан 55m²">
-    <p>Цена: 850€</p>
-    <p>Локација: Стар Центар</p>
+    <div class="stan" data-price="850" data-area="55" data-location="Стар Центар">
+        <h2>Стан 55m²</h2>
+        <img src="images/stan4.jpg" alt="Стан 55m²">
+        <p>Цена: 850€ | Локација: Стар Центар</p>
+        <p class="short-desc">Компактен стан во историски дел од градот.</p>
+        <button class="details-btn">Повеќе детали</button>
+        <a href="https://wa.me/38970123456?text=Интерес за стан 55m²" target="_blank" class="whatsapp-button">📞 WhatsApp</a>
+    </div>
 </div>
-
-<a href="https://wa.me/38970123456" target="_blank" class="whatsapp-button">📞 Контакт на WhatsApp</a>
 
 <section class="contact-section">
-    <h2>Контакт форма</h2>
-    <form class="contact-form">
-        <input type="text" name="name" placeholder="Име" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" placeholder="Вашата порака" required></textarea>
-        <button type="submit">Испрати 📋</button>
-    </form>
+<h2>Контакт форма</h2>
+<form class="contact-form">
+    <input type="text" name="name" placeholder="Име" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <textarea name="message" placeholder="Вашата порака" required></textarea>
+    <button type="submit">Испрати 📋</button>
+</form>
 </section>
 
 <footer>
-    <p>© 2026 Станови во Свети Николе | WhatsApp: +38970123456</p>
+<p>© 2026 Станови во Свети Николе</p>
+<div class="social-icons">
+    <a href="#"><img src="images/facebook.png" alt="FB"></a>
+    <a href="#"><img src="images/instagram.png" alt="IG"></a>
+</div>
 </footer>
 
 <script>
 function filterItems() {
     const maxPrice = parseFloat(document.getElementById('priceFilter').value) || Infinity;
     const maxArea = parseFloat(document.getElementById('areaFilter').value) || Infinity;
+    const location = document.getElementById('locationFilter').value;
     const items = document.querySelectorAll('.stan');
-    
+
     items.forEach(item => {
         const price = parseFloat(item.dataset.price);
         const area = parseFloat(item.dataset.area);
-        item.style.display = (price <= maxPrice && area <= maxArea) ? 'block' : 'none';
+        const loc = item.dataset.location;
+        item.style.display = (price <= maxPrice && area <= maxArea && (location === "" || location === loc)) ? 'block' : 'none';
     });
 }
 </script>
